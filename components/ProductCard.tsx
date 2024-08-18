@@ -10,7 +10,7 @@ export default function ProductCard({id, title, description, price, image, ratin
 
     async function handleAddToCart(){
         try{
-             const response = await axios.post('http://localhost:3000/api/product', {
+             const response = await axios.post('https://profile-fyi-assignment-three.vercel.app/api/product', {
             id,
             title,
             description,
