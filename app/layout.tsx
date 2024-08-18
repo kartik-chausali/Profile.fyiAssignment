@@ -1,7 +1,12 @@
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-
+import { Toaster } from "react-hot-toast";
+import Header from "@/components/Header";
+import { useState } from "react";
+import React  from "react";
+import CartManager from "@/components/CartManager";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -14,9 +19,23 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  
+  
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+      <Toaster position="top-center"  toastOptions={{
+    className: 'w-full',
+    style: {
+      border: '1px solid #713200',
+      padding: '16px',
+      color: '#713200',
+    },
+  }}/>
+    
+      {children}
+      </body>
     </html>
   );
 }
