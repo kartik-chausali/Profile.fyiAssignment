@@ -5,7 +5,7 @@ import { createContext, useContext, useState, ReactNode, useEffect } from 'react
 // Create a context for the cart
 // const[dummycart, setdummy] = useState(0)
 async function getCart() {
-   const response = await axios.get('http://localhost:3000/api/cart');
+   const response = await axios.get('https://profile-fyi-assignment-three.vercel.app/api/cart');
    return response.data;
 }
 const CartContext = createContext({ cart: 0, setCart: (value: number) => {} });
@@ -13,7 +13,7 @@ const CartContext = createContext({ cart: 0, setCart: (value: number) => {} });
 export function CartProvider({ children }: { children: ReactNode }) {
     const [cart, setCart] = useState(0);
     useEffect(()=>{
-        axios.get('http://localhost:3000/api/cart')
+        axios.get('https://profile-fyi-assignment-three.vercel.app/api/cart')
         .then(response => setCart(response.data))
 
     },[])
