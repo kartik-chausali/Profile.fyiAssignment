@@ -8,15 +8,15 @@ import axios from "axios"
 import {  useEffect, useState } from "react"
 import { TotalContextProvider } from "../TotalContext";
 
-    async function getCart(){
-       const response = await axios.get('http://localhost:3000/api/product');
-       return response.data;
-    }
+    // async function getCart(){
+    //    const response = await axios.get('http://localhost:3000/api/product');
+    //    return response.data;
+    // }
 export default function Cart(){
     // const products = await getCart();
     const [products, setProducts] = useState<Product[]>([]);
     useEffect(()=>{
-        axios.get('http://localhost:3000/api/product')
+        axios.get('https://profile-fyi-assignment-three.vercel.app/api/product')
         .then((response)=>setProducts(response.data))
        
     },[])

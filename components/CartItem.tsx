@@ -26,7 +26,7 @@ export default function CartItem({product, increasedTotal, setIncreasedTotal}:an
     }
 
     async function handleRemove(){
-        const respose = await axios.delete(`http://localhost:3000/api/product/${product.id}`)
+        const respose = await axios.delete(`https://profile-fyi-assignment-three.vercel.app/api/product/${product.id}`)
        setVisible(false);
     }
 
