@@ -1,7 +1,9 @@
-import CartContext from"../app/CartContext"
+"use client"
+import { quantityAtom } from "@/store/atoms/cart";
 import axios from "axios";
 import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 
 
@@ -13,8 +15,14 @@ export default  function Header(){
     //     .then(response => setCart(response.data))
     // },[])
 
-    const {cart} = useContext(CartContext)
-    console.log("logging cart", cart);
+    // const {cart} = useContext(CartContext)
+    console.log("header rendered");
+    const [cart, setCart] = useRecoilState(quantityAtom);
+    useEffect(()=>{
+        axios.get('/api/cart')
+        .then(response=> setCart(response.data));
+    },[cart])
+
     return  <div className="border-b-2 bg-slate-400 h-20 flex items-center justify-between">
             <div className="ml-2">
                 <h1 className="font-bold text-black text-xl">Ecommerce</h1>

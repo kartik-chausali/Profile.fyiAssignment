@@ -1,10 +1,13 @@
 
-import TotalContext from "@/app/TotalContext"
+import { cartTotal } from "@/store/atoms/cart";
 import Link from "next/link";
 import { Dispatch, useContext , SetStateAction} from "react"
+import { useRecoilState } from "recoil";
 
-export default function CartTotal({increasedTotal, setIncreasedTotal}:{increasedTotal:number, setIncreasedTotal:Dispatch<SetStateAction<number>>}){
-    
+export default function CartTotal(){
+  console.log("cartTotal re-rendered")
+  const [increasedTotal, setIncreasedTotal] = useRecoilState(cartTotal);
+  console.log(increasedTotal)
     const num = increasedTotal+91;
     const total = Number(num).toFixed(2);
 
@@ -16,7 +19,7 @@ export default function CartTotal({increasedTotal, setIncreasedTotal}:{increased
           <div className="space-y-2">
             <dl className="flex items-center justify-between gap-4">
               <dt className="text-base font-normal text-gray-500 dark:text-gray-400">Original price</dt>
-              <dd className="text-base font-medium text-gray-900 dark:text-white">${increasedTotal}</dd>
+              <dd className="text-base font-medium text-gray-900 dark:text-white">${increasedTotal.toFixed(2)}</dd>
             </dl>
 
             <dl className="flex items-center justify-between gap-4">

@@ -3,8 +3,13 @@
 import { use, useRef, useState } from "react"
 import { Product } from "./Products";
 import axios from "axios";
+import { useRecoilState } from "recoil";
+import { cartTotal } from "@/store/atoms/cart";
 
-export default function CartItem({product, increasedTotal, setIncreasedTotal}:any){
+export default function CartItem({product}:any){
+  console.log("cartItem re-rendered")
+  const [increasedTotal, setIncreasedTotal] = useRecoilState(cartTotal);
+
     const quantityRef:any = useRef(1);
     const[price, setPrice] = useState(product.price);
     const [quantity, setQuantity] = useState(1);
@@ -15,7 +20,7 @@ export default function CartItem({product, increasedTotal, setIncreasedTotal}:an
         setQuantity(quantity-1);
         let num = price-product.price
         setPrice(num.toFixed(2));
-        setIncreasedTotal((increasedTotal-product.price).toFixed(2));
+        setIncreasedTotal(increasedTotal-product.price);
     }
 
     function handleIncrement(){
@@ -26,7 +31,8 @@ export default function CartItem({product, increasedTotal, setIncreasedTotal}:an
     }
 
     async function handleRemove(){
-        const respose = await axios.delete(`https://profile-fyi-assignment-three.vercel.app/api/product/${product.id}`)
+        const respose = await axios.delete(`/api/product/${product.id}`)
+        setIncreasedTotal(increasedTotal-product.price);
        setVisible(false);
     }
 

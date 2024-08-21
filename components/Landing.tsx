@@ -1,19 +1,19 @@
+
 "use client"
-import { useState } from "react";
+import { RecoilRoot } from "recoil";
 import Banner from "./Banner";
 import Header from "./Header";
 import Products from "./Products";
-import CartContext, { CartProvider } from "@/app/CartContext";
+
 
 export default function Landing(){
-
   
-    const [cart, setCart] = useState()
-    return <CartProvider>
-    <div>
+    return<div>
+        <RecoilRoot>
       <Header/>
       <Banner/>
       <Products  />
+      </RecoilRoot>
     </div>
-    </CartProvider>
+    
 }

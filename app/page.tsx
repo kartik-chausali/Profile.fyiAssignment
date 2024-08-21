@@ -6,6 +6,7 @@ import Products from "@/components/Products";
 import axios from "axios";
 import Image from "next/image";
 import {useRef} from 'react'
+import { RecoilRoot } from "recoil";
 
 export default function Home() {
   

@@ -4,9 +4,10 @@ import CartItem from "@/components/CartItem";
 import CartTotal from "@/components/CartTotal";
 import ProductCard from "@/components/ProductCard"
 import { Product } from "@/components/Products"
+import { cartTotal, cartTotalSelector } from "@/store/atoms/cart";
 import axios from "axios"
 import {  useEffect, useState } from "react"
-import { TotalContextProvider } from "../TotalContext";
+import { RecoilRoot, useRecoilState } from "recoil";
 
     // async function getCart(){
     //    const response = await axios.get('http://localhost:3000/api/product');
@@ -16,20 +17,24 @@ export default function Cart(){
     // const products = await getCart();
     const [products, setProducts] = useState<Product[]>([]);
     useEffect(()=>{
-        axios.get('https://profile-fyi-assignment-three.vercel.app/api/product')
+        axios.get('/api/product')
         .then((response)=>setProducts(response.data))
        
     },[])
 
-   useEffect(()=>{
-    let total = 0;
-    products.map((product:any)=>{
-        total += product.price;
-    })
-    setIncreasedTotal(total)
-   },[products])
-    const[increasedTotal, setIncreasedTotal] = useState(1);
-            return  <section className="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
+//    useEffect(()=>{
+//     let total = 0;
+//     products.map((product:any)=>{
+//         total += product.price;
+//     })
+//     setIncreasedTotal(total)
+//    },[products])
+//     const[increasedTotal, setIncreasedTotal] = useState(1);
+
+        // const [increasedTotal, setIncreasedTotal] = useRecoilState(cartTotal);
+
+            return  <RecoilRoot>
+            <section className="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
             <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
             <h2 className="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Shopping Cart</h2>
               <div className="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
@@ -37,7 +42,7 @@ export default function Cart(){
                   <div className="space-y-6">
                     {
                         products.map((product:any)=>{
-                            return <CartItem key={product.id} product={product} increasedTotal = {increasedTotal} setIncreasedTotal={setIncreasedTotal}/>
+                            return <CartItem key={product.id} product={product} />
                         })
                     }
                 <AlsoBought/>
@@ -45,12 +50,12 @@ export default function Cart(){
                
                 </div>    
 
-          <CartTotal increasedTotal = {increasedTotal} setIncreasedTotal={setIncreasedTotal} />
+          <CartTotal/>
 
               </div>
             </div>
           </section>
-         
+          </RecoilRoot>
 }
       
 

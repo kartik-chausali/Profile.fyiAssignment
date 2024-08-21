@@ -1,16 +1,19 @@
-
-import CartContext from "@/app/CartContext";
+"use client"
+import { quantityAtom } from "@/store/atoms/cart";
 import axios from "axios";
 import Link from "next/link";
 import { useContext, useRef } from "react"
 import toast from "react-hot-toast"
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
 
 export default function ProductCard({id, title, description, price, image, rating, reviews}:{id:string, title:string, description:string, price:string, image:string, rating:number, reviews:number}){
-   const{cart, setCart} = useContext(CartContext)
-
+//    const{cart, setCart} = useContext(CartContext)
+    console.log("producst card re-rendered");
+    // const [cart, setCart] = useRecoilState(quantityAtom)
+    const setCart = useSetRecoilState(quantityAtom)
     async function handleAddToCart(){
         try{
-             const response = await axios.post('https://profile-fyi-assignment-three.vercel.app/api/product', {
+             const response = await axios.post('/api/product', {
             id,
             title,
             description,
@@ -20,7 +23,8 @@ export default function ProductCard({id, title, description, price, image, ratin
             reviews, 
             quantity:1,
         })
-        setCart(cart+1)
+        // setCart(cart+1)
+        setCart(cart => cart+1);
         toast.success("added to cart")
         }catch(e){
             toast.error('error adding to cart');

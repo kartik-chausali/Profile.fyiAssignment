@@ -1,4 +1,4 @@
-
+"use client"
 import axios from "axios";
 import { Dispatch, useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
@@ -22,7 +22,7 @@ export interface Product{
 
  }
 export default async function Products(){
-    
+    console.log("products re-rendered");
     // const products = await getProducts();
     const[products, setProducst] = useState<Product[]>()
     useEffect(()=>{
