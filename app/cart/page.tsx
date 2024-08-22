@@ -4,10 +4,11 @@ import CartItem from "@/components/CartItem";
 import CartTotal from "@/components/CartTotal";
 import ProductCard from "@/components/ProductCard"
 import { Product } from "@/components/Products"
-import { cartTotal, cartTotalSelector } from "@/store/atoms/cart";
+import { cartTotal} from "@/store/atoms/cart";
 import axios from "axios"
+import { env } from "process";
 import {  useEffect, useState } from "react"
-import { RecoilRoot, useRecoilState } from "recoil";
+import { RecoilRoot, useRecoilState, useSetRecoilState } from "recoil";
 
     // async function getCart(){
     //    const response = await axios.get('http://localhost:3000/api/product');
@@ -16,9 +17,23 @@ import { RecoilRoot, useRecoilState } from "recoil";
 export default function Cart(){
     // const products = await getCart();
     const [products, setProducts] = useState<Product[]>([]);
+    const setCartTotal = useSetRecoilState(cartTotal)
     useEffect(()=>{
-        axios.get('/api/product')
-        .then((response)=>setProducts(response.data))
+        const fetchProducts = async () => {
+            try {
+                const response = await axios.get(`/api/product`);
+                let total = 0;
+                response.data.map((product:any)=>{
+                    total += product.price;
+                })
+                setCartTotal(total);
+                setProducts(response.data);
+            } catch (error) {
+                console.error('Failed to fetch products', error);
+            }
+        };
+
+        fetchProducts();
        
     },[])
 
